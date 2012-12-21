@@ -2,7 +2,7 @@ var aServers = [
     {
         "name":"Twenga1",
         "hostname":"loully.ignorelist.com",
-        "url":"http://91.121.167.175/map/",
+        "url":"http://loully.ignorelist.com/map/toto.js",
         "watchdelay": 1, // delay in minute
         "timeout": 2  // timeout in seconds
     }
