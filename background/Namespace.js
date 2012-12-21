@@ -1,0 +1,2 @@
+var Background = {};
+Background.Configuration = {};

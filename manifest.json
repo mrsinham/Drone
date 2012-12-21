@@ -1,0 +1,21 @@
+{
+	"name": "Drone",
+	"version" : "1.0",
+	"manifest_version":2,
+	"description": "Service monitoring tool",
+    "background":{
+        "scripts":[
+            "/configuration/servers.js",
+            "/background/Namespace.js",
+            "/background/Log.js",
+            "/background/Configuration/Watchers.js",
+            "/background/Main.js"
+
+        ],
+        "persistent":false
+    },
+    "permissions": [
+           "http://www.google.fr",
+           "notifications"
+    ]
+}
