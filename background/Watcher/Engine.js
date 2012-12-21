@@ -10,6 +10,9 @@ Background.Watcher.Engine = function()
     this.aConfiguration = [];
 };
 
+/**
+ * Start url watching
+ */
 Background.Watcher.Engine.prototype.start = function()
 {
     this.bRunning = true;
@@ -17,7 +20,7 @@ Background.Watcher.Engine.prototype.start = function()
     var oThat = this;
     var fLoop = function()
     {
-
+        oThat.watchAllUrl();
         if (oThat.bRunning === true) {
             setTimeout(function(){
                 fLoop();
@@ -28,9 +31,12 @@ Background.Watcher.Engine.prototype.start = function()
     fLoop();
 };
 
+/**
+ * End url watching
+ */
 Background.Watcher.Engine.prototype.end = function()
 {
-
+    this.bRunning = false;
 };
 
 Background.Watcher.Engine.prototype._processResponse = function(oRequest, sWatchedUrl) {
@@ -73,6 +79,15 @@ Background.Watcher.prototype._parseMainSection = function(oResponse) {
 
 Background.Watcher.prototype._parseServicesSection = function(oResponse) {
 
+};
+
+Background.Watcher.Engine.prototype.watchAllUrl = function() {
+    for (var i = 0; i < this.aConfiguration.length; i++) {
+        /**
+         * Only if it must be watched
+         */
+        this.watchAnUrl(this.aConfiguration[i]);
+    }
 };
 
 /**
