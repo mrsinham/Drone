@@ -3,15 +3,15 @@
     "response": "",
     "applications": [{
         "name": "ShowcaseItemRead",
-        "code": 200,
+        "httpCode": 200,
         "response": "Items ok"
     }, {
         "name": "ShowcaseUserRead",
-        "code": 200,
+        "httpCode": 200,
         "response": "User read"
     }, {
         "name": "ShowcaseRabbitMQ",
-        "code": 200,
+        "httpCode": 200,
         "response": "Messaging system is ok"
     }],
     "environment": {

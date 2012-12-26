@@ -6,7 +6,7 @@
     "background":{
         "scripts":[
             "/configuration/servers.js",
-            "/background/Namespace.js",
+            "/Namespace.js",
             "/background/Log.js",
             "/background/Configuration/Watchers.js",
             "/background/Main.js"

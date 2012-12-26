@@ -39,30 +39,41 @@ Background.Watcher.Engine.prototype.end = function()
     this.bRunning = false;
 };
 
-Background.Watcher.Engine.prototype._processResponse = function(oRequest, sWatchedUrl) {
+/**
+ * Process the response of a server call
+ * @param oRequest
+ * @param aMyServerToWatch
+ * @param oStartDate
+ * @private
+ */
+Background.Watcher.Engine.prototype._processResponse = function(oRequest, aMyServerToWatch, oStartDate) {
 
-    var oResponse = {
-        requestState: this.REQUEST_NOTDONE,
-        requestComment: null,
-        servicesStates:[]
-    };
+    var oWatch = new Entity.Watch();
+    oWatch.setUrl(aMyServerToWatch.url);
+    oWatch.setHostname(aMyServerToWatch.hostname);
+    oWatch.setRequestTime(oStartDate);
+
+
     switch(oRequest.readyState) {
         case 1:
-            oResponse.requestState = this.REQUEST_INPROGRESS;
-            oRequest.requestComment = 'Request in progress...';
+            oWatch.setState(this.REQUEST_INPROGRESS);
+            oWatch.setResponseText('Request in progress...');
             break;
         case 4:
+            oWatch.setState(this.REQUEST_OK);
             // Ok, we need to process received request
             try {
                 var oContentResponse = JSON.parse(oRequest.responseText);
+
+
             } catch (eException) {
-                oResponse.requestState = this.REQUEST_FAILED;
-                oResponse.requestComment = 'Unable to parse request to ' + sWatchedUrl + ' not json response';
+                oWatch.setState(this.REQUEST_FAILED);
+                oWatch.setResponseText('Unable to parse request to ' + aMyServerToWatch.url + ' not json response');
             }
             break;
     }
 
-    this.aCurrentRequests[sWatchedUrl] = oResponse;
+    this.aCurrentRequests[aMyServerToWatch.url] = oWatch;
 
     /**
      * Warning subscriber that the url has been updated
@@ -70,6 +81,18 @@ Background.Watcher.Engine.prototype._processResponse = function(oRequest, sWatch
     chrome.extension.sendMessage({
         urlUpdated:sWatchedUrl
     }, function(){})
+
+};
+
+Background.Watcher.prototype._buildResponse = function(oResponse, aMyServerToWatch) {
+    oWatch.setUrl(aMyServerToWatch.url);
+    oWatch.setHostname(aMyServerToWatch.hostname);
+    if (typeof(oResponse.code) === 'undefined') {
+        oResponse.code = 999;
+        return oWatch;
+    }
+    oWatch.setHttpCode(oResponse.code);
+
 
 };
 
@@ -103,10 +126,11 @@ Background.Watcher.Engine.prototype.watchAnUrl = function(aMyServerToWatch) {
     var sHost = aMyServerToWatch.hostname;
     oRequest.open("GET", sUrl, true);
     oRequest.setRequestHeader('Host', sHost);
+    var oStartDate = new Date();
     oRequest.onreadystatechange = function() {
-        this._processResponse(oRequest, sUrl);
+        this._processResponse(oRequest, aMyServerToWatch, oStartDate);
     };
-
+    oRequest.send();
 };
 
 Background.Watcher.Engine.prototype.setConfiguration = function(aConfiguration) {
