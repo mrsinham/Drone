@@ -9,13 +9,16 @@
             "/Namespace.js",
             "/background/Log.js",
             "/background/Configuration/Watchers.js",
+            "/Entity/Watch.js",
+            "/Entity/WatchList.js",
+            "/background/Watcher/Engine.js",
             "/background/Main.js"
 
         ],
         "persistent":false
     },
     "permissions": [
-           "http://www.google.fr",
+           "http://*/*",
            "notifications"
     ]
 }
