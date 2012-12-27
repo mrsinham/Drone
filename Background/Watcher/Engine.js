@@ -8,6 +8,7 @@ Background.Watcher.Engine = function()
     this.iLoopInterval = 2000;
     this.aConfiguration = [];
     this.oWatchList = null;
+    this.oLogger = null;
 
     this.bInited = false;
 
@@ -161,14 +162,19 @@ Background.Watcher.Engine.prototype._processResponse = function(oRequest, aMySer
         case 4:
             oWatch.setState(this.REQUEST_OK);
             oWatch.setEndRequestTime(new Date());
+            console.log(oWatch);
             // Ok, we need to process received content
             try {
+
                 var oContentResponse = JSON.parse(oRequest.responseText);
-                this._buildResponse(oContentResponse, oWatch);
+
+
             } catch (eException) {
+                console.log(eException.message, oRequest.responseText);
                 oWatch.setState(this.REQUEST_FAILED);
                 oWatch.setResponseText('Unable to parse request to ' + aMyServerToWatch.url + ' not json response');
             }
+            this._buildResponse(oContentResponse, oWatch);
             break;
     }
 
@@ -177,6 +183,7 @@ Background.Watcher.Engine.prototype._processResponse = function(oRequest, aMySer
      * Storing computed watch
      */
     this.getWatchList().setWatch(oWatch);
+
 
     /**
      * Warning subscribers that the url has been updated
@@ -193,10 +200,9 @@ Background.Watcher.Engine.prototype._processResponse = function(oRequest, aMySer
  **********************************************/
 
 Background.Watcher.Engine.prototype._buildResponse = function(oResponse, oWatch) {
-    oWatch.setUrl(aMyServerToWatch.url);
-    oWatch.setHostname(aMyServerToWatch.hostname);
     this._parseMainSection(oResponse, oWatch);
-    this._parseServicesSection(oResponse, oWatch);
+    this._parseApplicationsSection(oResponse, oWatch);
+    this._parseEnvironmentSection(oResponse, oWatch);
 
 };
 
@@ -214,6 +220,7 @@ Background.Watcher.Engine.prototype._parseApplicationsSection = function(oRespon
     if (typeof(oResponse.applications) !== 'undefined' && typeof(oResponse.applications.length) !== 'undefined') {
         for (var i = 0; i < oResponse.applications.length; i++) {
             var oJSONApplication = oResponse.applications[i];
+
             if (typeof (oJSONApplication.name) === 'undefined') {
                 this.getLogger().warning('Unable to add application without name field - watch ('+oWatch.getUrl()+ ')');
                 return false;
