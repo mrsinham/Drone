@@ -8,6 +8,11 @@ Background.Watcher.Engine = function()
     this.iLoopInterval = 2000;
     this.aConfiguration = [];
     this.oWatchList = null;
+
+    this.bInited = false;
+
+    this.sCurrentHost = 'toto.com';
+    this.oRequestUrl = null;
 };
 
 /************************************
@@ -32,6 +37,8 @@ Background.Watcher.Engine.prototype.start = function()
         }
 
     };
+
+
     fLoop();
 };
 
@@ -59,6 +66,7 @@ Background.Watcher.Engine.prototype.watchAllUrl = function() {
  * @param aMyServerToWatch
  */
 Background.Watcher.Engine.prototype.watchAnUrl = function(aMyServerToWatch) {
+
     /**
      * Build an XMLHttpRequest object
      */
@@ -66,7 +74,16 @@ Background.Watcher.Engine.prototype.watchAnUrl = function(aMyServerToWatch) {
     var sUrl = aMyServerToWatch.url;
     var sHost = aMyServerToWatch.hostname;
     oRequest.open("GET", sUrl, true);
-    oRequest.setRequestHeader('Host', sHost);
+    this.sCurrentHost = aMyServerToWatch.hostname;
+    this.oRequestUrl = this.parseUrl(aMyServerToWatch.url);
+
+    if (false === this.bInited) {
+        this.modifyRequest();
+        this.bInited = true;
+    }
+
+    console.log(this.sCurrentHost);
+    //oRequest.setRequestHeader('Host', sHost);
     var oStartDate = new Date();
     var _oThat = this;
     oRequest.onreadystatechange = function() {
@@ -75,7 +92,41 @@ Background.Watcher.Engine.prototype.watchAnUrl = function(aMyServerToWatch) {
     oRequest.send();
 };
 
+Background.Watcher.Engine.prototype.parseUrl = function(sUrl) {
+        var l = document.createElement("a");
+        l.href = sUrl;
+        return l;
 
+};
+
+Background.Watcher.Engine.prototype.modifyRequest = function() {
+    var oThat = this;
+    var rule1 = {
+        priority: 100,
+        conditions: [
+            new chrome.declarativeWebRequest.RequestMatcher({
+                url: {
+                    hostSuffix: oThat.oRequestUrl.hostname,
+                    pathEquals: oThat.oRequestUrl.pathname,
+                    schemes :['http', 'https']
+                } })
+        ],
+        actions:[
+            new chrome.declarativeWebRequest.SetRequestHeader({
+                name :'Host',
+                value: this.getHost()
+            })
+            //new chrome.declarativeWebRequest.CancelRequest()
+        ]
+    };
+
+    chrome.declarativeWebRequest.onRequest.addRules([rule1]);
+};
+
+Background.Watcher.Engine.prototype.getHost = function()
+{
+    return this.sCurrentHost;
+};
 
 /**
  * Process the response of a server call
@@ -110,6 +161,7 @@ Background.Watcher.Engine.prototype._processResponse = function(oRequest, aMySer
             }
             break;
     }
+
 
     /**
      * Storing computed watch
@@ -177,8 +229,6 @@ Background.Watcher.Engine.prototype._parseEnvironmentSection = function(oRespons
     }
 };
 
-
-
 Background.Watcher.Engine.prototype.setConfiguration = function(aConfiguration) {
     this.aConfiguration = aConfiguration;
 };
@@ -202,4 +252,4 @@ Background.Watcher.Engine.prototype.getLogger = function()
         this.oLogger = new Background.Log();
     }
     return this.oLogger;
-}
+}:
