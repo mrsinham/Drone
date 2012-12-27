@@ -5,14 +5,14 @@ Background.Configuration.Watchers = function()
 };
 
 /**
- * Load the configuration into the system
+ * Load the Configuration into the system
  * @param aWatchersConfigurations
  * @return {Boolean}
  */
 Background.Configuration.Watchers.prototype.loadConfigurationFromArray = function (aWatchersConfigurations)
 {
     if ('undefined' === typeof(aWatchersConfigurations)) {
-        this.oLogger.warning('Unable to load configuration, not an array');
+        this.oLogger.warning('Unable to load Configuration, not an array');
         return false;
     }
 
@@ -30,7 +30,7 @@ Background.Configuration.Watchers.prototype.getConfiguration = function()
 }
 
 /***
- * Check the validity of each configuration
+ * Check the validity of each Configuration
  * @param aOneConfiguration
  * @return {Boolean}
  * @private

@@ -5,14 +5,14 @@
 	"description": "Service monitoring tool",
     "background":{
         "scripts":[
-            "/configuration/servers.js",
+            "/Configuration/servers.js",
             "/Namespace.js",
-            "/background/Log.js",
-            "/background/Configuration/Watchers.js",
+            "/Background/Log.js",
+            "/Background/Configuration/Watchers.js",
             "/Entity/Watch.js",
             "/Entity/WatchList.js",
-            "/background/Watcher/Engine.js",
-            "/background/Main.js"
+            "/Background/Watcher/Engine.js",
+            "/Background/Main.js"
 
         ],
         "persistent":false

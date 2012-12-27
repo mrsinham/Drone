@@ -92,6 +92,11 @@ Background.Watcher.Engine.prototype.watchAnUrl = function(aMyServerToWatch) {
     oRequest.send();
 };
 
+/**
+ * Split and parse url
+ * @param sUrl
+ * @return {HTMLElement}
+ */
 Background.Watcher.Engine.prototype.parseUrl = function(sUrl) {
         var l = document.createElement("a");
         l.href = sUrl;
@@ -99,6 +104,11 @@ Background.Watcher.Engine.prototype.parseUrl = function(sUrl) {
 
 };
 
+/**
+ * Modifying outgoing request because chrome doesnt allow
+ * setRequestHeader('Host', 'toto.com') in XHR Requests
+ * @return void
+ */
 Background.Watcher.Engine.prototype.modifyRequest = function() {
     var oThat = this;
     var rule1 = {
@@ -246,10 +256,9 @@ Background.Watcher.Engine.prototype.getWatchList = function() {
 /**
  * @return Background.Log
  */
-Background.Watcher.Engine.prototype.getLogger = function()
-{
+Background.Watcher.Engine.prototype.getLogger = function() {
     if (null === this.oLogger) {
         this.oLogger = new Background.Log();
     }
     return this.oLogger;
-}:
+}
