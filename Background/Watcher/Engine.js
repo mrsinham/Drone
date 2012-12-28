@@ -14,6 +14,8 @@ Background.Watcher.Engine = function()
 
     this.sCurrentHost = 'toto.com';
     this.oRequestUrl = null;
+
+    this.oStorageEngine = null;
 };
 
 /************************************
@@ -38,7 +40,6 @@ Background.Watcher.Engine.prototype.start = function()
         }
 
     };
-
 
     fLoop();
 };
@@ -81,7 +82,6 @@ Background.Watcher.Engine.prototype.watchAnUrl = function(aMyServerToWatch) {
         this.bInited = true;
     }
 
-    console.log(this.sCurrentHost);
     //oRequest.setRequestHeader('Host', sHost);
     var oStartDate = new Date();
     var _oThat = this;
@@ -150,6 +150,7 @@ Background.Watcher.Engine.prototype._processResponse = function(oRequest, aMySer
     oWatch.setUrl(aMyServerToWatch.url);
     oWatch.setHostname(aMyServerToWatch.hostname);
     oWatch.setRequestTime(oStartDate);
+    oWatch.setName(aMyServerToWatch.name);
 
     switch(oRequest.readyState) {
         case 1:
@@ -172,6 +173,10 @@ Background.Watcher.Engine.prototype._processResponse = function(oRequest, aMySer
                 oWatch.setResponseText('Unable to parse request to ' + aMyServerToWatch.url + ' not json response');
             }
             this._buildResponse(oContentResponse, oWatch);
+
+            this.getStorageEngine().saveWatch(oWatch, function(eEvent) {
+
+            });
             break;
     }
 
@@ -180,8 +185,6 @@ Background.Watcher.Engine.prototype._processResponse = function(oRequest, aMySer
      * Storing computed watch
      */
     this.getWatchList().setWatch(oWatch);
-
-
 
 };
 
@@ -259,4 +262,14 @@ Background.Watcher.Engine.prototype.getLogger = function() {
         this.oLogger = new Background.Log();
     }
     return this.oLogger;
+};
+
+/**
+ * @return Storage.WatchList
+ */
+Background.Watcher.Engine.prototype.getStorageEngine = function() {
+    if (null === this.oStorageEngine) {
+        this.oStorageEngine = new Storage.WatchList();
+    }
+    return this.oStorageEngine;
 };

@@ -11,11 +11,16 @@
             "/Background/Configuration/Watchers.js",
             "/Entity/Watch.js",
             "/Entity/WatchList.js",
+            "/Storage/Engine.js",
+            "/Storage/WatchList.js",
             "/Background/Watcher/Engine.js",
             "/Background/Main.js"
 
         ],
         "persistent":false
+    },
+    "browser_action": {
+        "default_icon" : "icon.png"
     },
     "permissions": [
            "http://*/*",

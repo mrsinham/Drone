@@ -38,6 +38,11 @@ Entity.Watch.prototype.setHttpCode = function(iCode)
     this.httpCode = iCode;
 }
 
+
+Entity.Watch.prototype.getHttpCode = function() {
+    return this.httpCode;
+};
+
 Entity.Watch.prototype.setApplication = function(sName, iHttpCode, sResponse)
 {
     this.applications[sName] = {
@@ -46,9 +51,17 @@ Entity.Watch.prototype.setApplication = function(sName, iHttpCode, sResponse)
     };
 };
 
+Entity.Watch.prototype.getApplication = function() {
+    return this.applications;
+};
+
 Entity.Watch.prototype.setEnvironment = function(sName, sValue)
 {
     this.environment[sName] = sValue;
+};
+
+Entity.Watch.prototype.getEnvironment = function() {
+    return this.environment;
 };
 
 Entity.Watch.prototype.setState = function(sState)
@@ -56,14 +69,30 @@ Entity.Watch.prototype.setState = function(sState)
     this.state = sState;
 };
 
+Entity.Watch.prototype.getState = function() {
+    return this.state;
+};
+
 Entity.Watch.prototype.setResponseText = function (sResponseText) {
     this.response = sResponseText;
 };
 
+Entity.Watch.prototype.getResponseText = function() {
+    return this.response;
+};
+
 Entity.Watch.prototype.setRequestTime = function(oRequestTime) {
     this.requestTime = oRequestTime;
-}
+};
 
 Entity.Watch.prototype.setEndRequestTime = function(oEndRequestTime) {
     this.endRequestTime = oEndRequestTime;
-}
+};
+
+Entity.Watch.prototype.getName = function() {
+    return this.name;
+};
+
+Entity.Watch.prototype.setName = function(sName) {
+    this.name = sName;
+};
