@@ -51,8 +51,6 @@ Background.Watcher.Engine.prototype.end = function()
     this.bRunning = false;
 };
 
-
-
 Background.Watcher.Engine.prototype.watchAllUrl = function() {
     for (var i = 0; i < this.aConfiguration.length; i++) {
         /**
@@ -153,7 +151,6 @@ Background.Watcher.Engine.prototype._processResponse = function(oRequest, aMySer
     oWatch.setHostname(aMyServerToWatch.hostname);
     oWatch.setRequestTime(oStartDate);
 
-
     switch(oRequest.readyState) {
         case 1:
             oWatch.setState(this.REQUEST_INPROGRESS);
@@ -185,12 +182,6 @@ Background.Watcher.Engine.prototype._processResponse = function(oRequest, aMySer
     this.getWatchList().setWatch(oWatch);
 
 
-    /**
-     * Warning subscribers that the url has been updated
-     */
-    /*chrome.extension.sendMessage({
-        urlUpdated:oWatch
-    }, function(){})*/
 
 };
 
@@ -268,4 +259,4 @@ Background.Watcher.Engine.prototype.getLogger = function() {
         this.oLogger = new Background.Log();
     }
     return this.oLogger;
-}
+};

@@ -4,6 +4,7 @@
  */
 Entity.Watch = function()
 {
+    this.name = null;
     this.url = null;
     this.hostname = null;
     this.httpCode = null;
