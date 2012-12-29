@@ -28,6 +28,11 @@ Entity.Watch.prototype.getUrl = function()
     return this.url;
 };
 
+
+Entity.Watch.prototype.getHostname = function() {
+    return this.hostname;
+};
+
 Entity.Watch.prototype.setHostname = function(sHostname)
 {
     this.hostname = sHostname;
@@ -51,8 +56,18 @@ Entity.Watch.prototype.setApplication = function(sName, iHttpCode, sResponse)
     };
 };
 
-Entity.Watch.prototype.getApplication = function() {
+Entity.Watch.prototype.setAllApplications = function(oApplications)
+{
+    this.applications = oApplications;
+};
+
+Entity.Watch.prototype.getAllApplications = function() {
     return this.applications;
+};
+
+Entity.Watch.prototype.setAllApplications = function(oApplications)
+{
+    this.applications = oApplications;
 };
 
 Entity.Watch.prototype.setEnvironment = function(sName, sValue)
@@ -60,8 +75,13 @@ Entity.Watch.prototype.setEnvironment = function(sName, sValue)
     this.environment[sName] = sValue;
 };
 
-Entity.Watch.prototype.getEnvironment = function() {
+Entity.Watch.prototype.getAllEnvironments = function() {
     return this.environment;
+};
+
+Entity.Watch.prototype.setAllEnvironments = function(oEnvironments)
+{
+    this.environment = oEnvironments;
 };
 
 Entity.Watch.prototype.setState = function(sState)

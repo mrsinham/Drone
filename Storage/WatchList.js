@@ -10,12 +10,15 @@ Storage.WatchList.prototype.saveWatch = function(oWatch, fCallback) {
         this.open(function(){
             var oData = {
                 name: oWatch.getName(),
-                applications: oWatch.getApplication(),
+                applications: oWatch.getAllApplications(),
                 environment : oWatch.getEnvironment(),
                 httpCode: oWatch.getHttpCode(),
                 responseText: oWatch.getResponseText(),
-                state: oWatch.getState()
+                state: oWatch.getState(),
+                hostname: oWatch.getHostname(),
+                environment: oWatch.getAllEnvironments()
             };
+            console.log(oData);
 
             oThat._getStorageEngine().saveData(oData, function() {
                 fCallback();
@@ -26,16 +29,23 @@ Storage.WatchList.prototype.saveWatch = function(oWatch, fCallback) {
 };
 
 Storage.WatchList.prototype.getAllWatch = function(fCallback) {
-    this._getStorageEngine().getData(function(oRow){
-        var oWatch = new Entity.Watch();
-        oWatch.setName(oRow.name);
-        oWatch.setApplication(oRow.applications);
-        oWatch.setEnvironment(oRow.environment);
-        oWatch.setHttpCode(oRow.httpCode);
-        oWatch.setResponseText(oRow.responseText);
-        oWatch.setState(oRow.state);
-        fCallback(oWatch);
+
+    var oThat = this;
+    this.open(function(){
+        oThat._getStorageEngine().getData(function(oRow){
+            var oWatch = new Entity.Watch();
+            oWatch.setName(oRow.name);
+            oWatch.setAllApplications(oRow.applications);
+            oWatch.setEnvironment(oRow.environment);
+            oWatch.setHttpCode(oRow.httpCode);
+            oWatch.setResponseText(oRow.responseText);
+            oWatch.setState(oRow.state);
+            oWatch.setHostname(oRow.hostname);
+            oWatch.setAllEnvironments(oRow.environment);
+            fCallback(oWatch);
+        });
     });
+
 };
 
 Storage.WatchList.prototype.open = function(fCallback) {
@@ -52,4 +62,15 @@ Storage.WatchList.prototype._getStorageEngine = function()
         this.oStorageEngine = new Storage.Engine('DroneDb', 'Watchlist', 'name', '456');
     }
     return this.oStorageEngine;
+}
+
+/***
+ * Singleton
+ */
+Storage.WatchList.instance = null;
+Storage.WatchList.getInstance = function() {
+    if (this.instance == null) {
+        this.instance = new Storage.WatchList();
+    }
+    return this.instance;
 }

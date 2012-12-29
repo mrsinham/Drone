@@ -23,6 +23,7 @@
         "default_icon" : "icon.png"
     },
     "permissions": [
+           "tabs",
            "http://*/*",
            "notifications",
            "declarativeWebRequest"

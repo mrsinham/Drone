@@ -168,7 +168,6 @@ Background.Watcher.Engine.prototype._processResponse = function(oRequest, aMySer
 
 
             } catch (eException) {
-                console.log(eException.message, oRequest.responseText);
                 oWatch.setState(this.REQUEST_FAILED);
                 oWatch.setResponseText('Unable to parse request to ' + aMyServerToWatch.url + ' not json response');
             }
@@ -269,7 +268,7 @@ Background.Watcher.Engine.prototype.getLogger = function() {
  */
 Background.Watcher.Engine.prototype.getStorageEngine = function() {
     if (null === this.oStorageEngine) {
-        this.oStorageEngine = new Storage.WatchList();
+        this.oStorageEngine = Storage.WatchList.getInstance();
     }
     return this.oStorageEngine;
 };

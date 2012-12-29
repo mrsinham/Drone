@@ -4,3 +4,8 @@ Background.Watcher = {};
 
 var Entity = {};
 var Storage = {};
+
+/** MVC **/
+var Controller = {};
+var View = {};
+var Model = {};

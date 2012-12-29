@@ -24,11 +24,8 @@ Storage.Engine.prototype.open = function(fCallback) {
         };
 
         oRequestToTheBase.onerror = function(e){
-            console.log('eee');
             console.log(e);
         };
-
-
 
 };
 
