@@ -10,6 +10,7 @@ View.Overview.prototype.addWatch = function(oWatch) {
         sHtmlToAdd += '<td class="name"></td>';
         sHtmlToAdd += '<td class="httpcode"></td>';
         sHtmlToAdd += '<td class="applications"></td>';
+        sHtmlToAdd += '<td class="environment"></td>';
         sHtmlToAdd += '</tr>';
         $(this.sOverviewSelector).append(sHtmlToAdd);
     }
@@ -19,17 +20,18 @@ View.Overview.prototype.addWatch = function(oWatch) {
     oRow.find('.name').html(this._createNameSection(oWatch))
     oRow.find('.httpcode').html(this._createHttpCodeSection(oWatch))
     oRow.find('.applications').html(this._createApplicationsSection(oWatch))
+    oRow.find('.environment').html(this._createEnvironmentSection(oWatch))
 
 };
 
 View.Overview.prototype._createNameSection = function(oWatch) {
-    var sHtmlToAdd = oWatch.getName();
     if (true === oWatch.isOk()) {
         var sIconClass= 'icon-ok-circle';
     } else {
         var sIconClass = 'icon-exclamation-sign';
     }
-    sHtmlToAdd += '<i class="'+sIconClass+'"></i>';
+    var sHtmlToAdd = '<i class="'+sIconClass+'"></i>&nbsp;';
+    sHtmlToAdd += oWatch.getName();
     return sHtmlToAdd;
 };
 
@@ -58,6 +60,19 @@ View.Overview.prototype._createApplicationsSection = function (oWatch) {
     }
 
     return sApplication;
+}
+
+View.Overview.prototype._createEnvironmentSection = function (oWatch) {
+    var oEnvironments = oWatch.getAllEnvironments();
+    var sEnvironment = '';
+    for (sEnvironmentName in oEnvironments) {
+        if ('length' !== sEnvironmentName) {
+            var mEnvironmentValue = oEnvironments[sEnvironmentName];
+            sEnvironment += '<strong>'+sEnvironmentName+'</strong> : <span class="label label-info" style="margin-right:5px">'+mEnvironmentValue+'</span>';
+        }
+    }
+
+    return sEnvironment;
 }
 
 View.Overview.prototype.emptyOverview = function() {

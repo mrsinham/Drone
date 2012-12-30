@@ -39,9 +39,7 @@ Storage.Engine.prototype.open = function(fCallback) {
 Storage.Engine.prototype.saveData = function (oData, fCallback) {
 
     var oObjectStore = this._getObjectStore();
-    console.log(oData);
     var oMyRequest = oObjectStore.put(oData);
-    console.log(oData);
     oMyRequest.onsuccess = function(eEvent) {
         fCallback(eEvent);
     };
@@ -70,7 +68,6 @@ Storage.Engine.prototype.getData = function (fCallbackForEachRow, iKey) {
 
     oCursor.onsuccess = function(eEvent) {
         var oResult = eEvent.target.result;
-        console.log(eEvent, 'oui');
         if (false === oResult || null === oResult) {
             return;
         }
