@@ -37,6 +37,8 @@ var oController = new Controller.Overview();
 $(document).ready(function() {
     // Handler for .ready() called.
 
+
+
     var fLoop = function()
     {
         oController.updateWatchList();

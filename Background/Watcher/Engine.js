@@ -9,6 +9,7 @@ Background.Watcher.Engine = function()
     this.aConfiguration = [];
     this.oWatchList = null;
     this.oLogger = null;
+    this.bSendNotifications = true;
 
     this.bInited = false;
 
@@ -173,9 +174,34 @@ Background.Watcher.Engine.prototype._processResponse = function(oRequest, aMySer
             }
             this._buildResponse(oContentResponse, oWatch);
 
-            this.getStorageEngine().saveWatch(oWatch, function(eEvent) {
+            /**
+             * Was good before ?
+             */
+            if (true === this.bSendNotifications) {
+                this.getStorageEngine().getWatch(oWatch.getName(), function(oFetchedWatch){
+                    if (true === oFetchedWatch.isOk() && false === oWatch.isOk()) {
+                        // Ok, something went bad, warn user
+                        var notification = webkitNotifications.createNotification(
+                            '/Html/Bootstrap/img/removesign.png',  // icon url - can be relative
+                            'Drone alert',  // notification title
+                            oWatch.getName()+' is going bad : '+oWatch.getResponseText()  // notification body text
+                        );
+                        notification.show();
+                    } else if (false === oFetchedWatch.isOk() && true === oWatch.isOk()){
+                        // Ok, something went bad, warn user
+                        var notification = webkitNotifications.createNotification(
+                            '/Html/Bootstrap/img/check.png',  // icon url - can be relative
+                            'Drone alert',  // notification title
+                            oWatch.getName()+' is ok now : '+oWatch.getResponseText()  // notification body text
+                        );
+                        notification.show();
+                    }
+                });
+            }
 
-            });
+            this.getStorageEngine().saveWatch(oWatch, function(eEvent) {});
+
+
             break;
     }
 

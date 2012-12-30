@@ -22,6 +22,9 @@ View.Overview.prototype.addWatch = function(oWatch) {
     oRow.find('.applications').html(this._createApplicationsSection(oWatch))
     oRow.find('.environment').html(this._createEnvironmentSection(oWatch))
 
+
+    $('.jsTooltip').tooltip();
+
 };
 
 View.Overview.prototype._createNameSection = function(oWatch) {
@@ -31,7 +34,7 @@ View.Overview.prototype._createNameSection = function(oWatch) {
         var sIconClass = 'icon-exclamation-sign';
     }
     var sHtmlToAdd = '<i class="'+sIconClass+'"></i>&nbsp;';
-    sHtmlToAdd += oWatch.getName();
+    sHtmlToAdd += '<span>'+oWatch.getName()+'</span>';
     return sHtmlToAdd;
 };
 
@@ -41,7 +44,7 @@ View.Overview.prototype._createHttpCodeSection = function(oWatch) {
     } else {
         var sHttpCodeClass = 'btn-danger';
     }
-    return '<div class="btn '+sHttpCodeClass+'">'+oWatch.getHttpCode()+'</div>';
+    return '<a rel="tooltip" data-placement="top" data-original-title="'+oWatch.getResponseText()+'" class="jsTooltip btn '+sHttpCodeClass+'">'+oWatch.getHttpCode()+'</a>';
 }
 
 View.Overview.prototype._createApplicationsSection = function (oWatch) {
@@ -55,7 +58,7 @@ View.Overview.prototype._createApplicationsSection = function (oWatch) {
             } else {
                 var sApplicationButtonClass = 'btn-danger';
             }
-            sApplication += '<span class="btn '+sApplicationButtonClass+'" style="margin-right:5px">'+sApplicationName+'</span>';
+            sApplication += '<a rel="tooltip" data-placement="top" data-original-title="'+oApplication.httpCode+' - '+oApplication.response+'" class="jsTooltip btn '+sApplicationButtonClass+'" style="margin-right:5px">'+sApplicationName+'</a>';
         }
     }
 
