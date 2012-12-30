@@ -161,7 +161,7 @@ Background.Watcher.Engine.prototype._processResponse = function(oRequest, aMySer
         case 4:
             oWatch.setState(this.REQUEST_OK);
             oWatch.setEndRequestTime(new Date());
-            console.log(oWatch);
+
             // Ok, we need to process received content
             try {
 

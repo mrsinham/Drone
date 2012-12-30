@@ -72,7 +72,8 @@ Storage.Engine.prototype.getData = function (fCallbackForEachRow, iKey) {
             return;
         }
         fCallbackForEachRow(oResult.value);
-        oResult.continue;
+        oResult.continue();
+
     };
 
     oCursor.onerror = this.onError;
@@ -88,6 +89,5 @@ Storage.Engine.prototype._getObjectStore = function (sMode) {
 };
 
 Storage.Engine.prototype.onError = function (eEvent) {
-    console.log(eEvent);
     throw 'Unable to perform request';
 };

@@ -17,7 +17,6 @@ Storage.WatchList.prototype.saveWatch = function(oWatch, fCallback) {
                 hostname: oWatch.getHostname(),
                 environment: oWatch.getAllEnvironments()
             };
-
             oThat._getStorageEngine().saveData(oData, function() {
                 fCallback();
             });

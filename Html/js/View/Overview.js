@@ -3,7 +3,6 @@ View.Overview = function() {
 };
 
 View.Overview.prototype.addWatch = function(oWatch) {
-
     if ($('#watch-'+oWatch.getName()).length === 0) {
         var sHtmlToAdd = '';
         sHtmlToAdd += '<tr class="watch" id="watch-'+oWatch.getName()+'">';
