@@ -70,7 +70,8 @@ Storage.Engine.prototype.getData = function (fCallbackForEachRow, iKey) {
 
     oCursor.onsuccess = function(eEvent) {
         var oResult = eEvent.target.result;
-        if (false === oResult) {
+        console.log(eEvent, 'oui');
+        if (false === oResult || null === oResult) {
             return;
         }
         fCallbackForEachRow(oResult.value);

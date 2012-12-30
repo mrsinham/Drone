@@ -11,14 +11,12 @@ Storage.WatchList.prototype.saveWatch = function(oWatch, fCallback) {
             var oData = {
                 name: oWatch.getName(),
                 applications: oWatch.getAllApplications(),
-                environment : oWatch.getEnvironment(),
                 httpCode: oWatch.getHttpCode(),
                 responseText: oWatch.getResponseText(),
                 state: oWatch.getState(),
                 hostname: oWatch.getHostname(),
                 environment: oWatch.getAllEnvironments()
             };
-            console.log(oData);
 
             oThat._getStorageEngine().saveData(oData, function() {
                 fCallback();

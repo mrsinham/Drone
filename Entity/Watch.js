@@ -16,6 +16,7 @@ Entity.Watch = function()
     this.endRequestTime = null;
     this.state = null;
     this.response = null;
+    this.sNormalCode = 200;
 };
 
 Entity.Watch.prototype.setUrl = function(sUrl)
@@ -116,3 +117,7 @@ Entity.Watch.prototype.getName = function() {
 Entity.Watch.prototype.setName = function(sName) {
     this.name = sName;
 };
+
+Entity.Watch.prototype.isOk = function() {
+    return (this.sNormalCode === this.httpCode);
+}
