@@ -3,6 +3,11 @@
 	"version" : "1.0",
 	"manifest_version":2,
 	"description": "Service monitoring tool",
+    "icons":{
+        "16":"/Html/Bootstrap/img/plane-16.png",
+        "48":"/Html/Bootstrap/img/plane-48.png",
+        "128":"/Html/Bootstrap/img/plane-128.png"
+    },
     "background":{
         "scripts":[
             "/Configuration/servers.js",
@@ -24,7 +29,11 @@
         "/Html/Bootstrap/img/removesign.png"
     ],
     "browser_action": {
-        "default_icon" : "icon.png"
+        "default_icon" :
+        {
+            "19": "/Html/Bootstrap/img/plane.png",
+            "38": "/Html/Bootstrap/img/plane-38.png"
+        }
     },
     "permissions": [
            "tabs",
