@@ -12,6 +12,17 @@ Controller.Overview.prototype.updateWatchList = function()
     this._getWatchListStorage().getAllWatch(function(oWatch){
         oThat._getView().addWatch(oWatch);
     });
+};
+
+Controller.Overview.prototype.updateCounter = function()
+{
+    // Emptying overview table
+
+    var oThat = this;
+    // Fetching watchlist
+    this._getWatchListStorage().count(function(iCount){
+        oThat._getView().updateCounter(iCount);
+    });
 }
 
 
@@ -41,6 +52,7 @@ $(document).ready(function() {
 
     var fLoop = function()
     {
+        oController.updateCounter();
         oController.updateWatchList();
 
         setTimeout(function(){

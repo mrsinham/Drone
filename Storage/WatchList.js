@@ -37,6 +37,17 @@ Storage.WatchList.prototype.getAllWatch = function(fCallback) {
 
 };
 
+Storage.WatchList.prototype.count = function(fCallback) {
+
+    var oThat = this;
+    this.open(function(){
+        oThat._getStorageEngine().count(function(iCount){
+            fCallback(iCount);
+        });
+    });
+
+};
+
 Storage.WatchList.prototype.getWatch = function(sName, fCallback) {
 
     var oThat = this;

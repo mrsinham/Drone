@@ -45,6 +45,15 @@ Storage.Engine.prototype.saveData = function (oData, fCallback) {
     };
 };
 
+Storage.Engine.prototype.count = function (fCallback) {
+
+    var oObjectStore = this._getObjectStore();
+    var oMyRequest = oObjectStore.count();
+    oMyRequest.onsuccess = function(eEvent) {
+        fCallback(eEvent.target.result);
+    };
+};
+
 /**
  * Fetch data from indexedDb
  * @param fCallbackForEachRow

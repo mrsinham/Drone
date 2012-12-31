@@ -1,5 +1,6 @@
 View.Overview = function() {
     this.sOverviewSelector = '#Overview';
+    this.sOverviewCounterSelector = '#OverviewCounter';
 };
 
 View.Overview.prototype.addWatch = function(oWatch) {
@@ -24,6 +25,10 @@ View.Overview.prototype.addWatch = function(oWatch) {
 
     $('.jsTooltip').tooltip();
 
+};
+
+View.Overview.prototype.updateCounter = function(iCount) {
+    $(this.sOverviewCounterSelector).html(iCount);
 };
 
 View.Overview.prototype._createNameSection = function(oWatch) {
