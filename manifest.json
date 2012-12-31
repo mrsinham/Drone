@@ -17,7 +17,7 @@
             "/Background/Main.js"
 
         ],
-        "persistent":false
+        "persistent":true
     },
     "web_accessible_resources": [
         "/Html/Bootstrap/img/check.png",
