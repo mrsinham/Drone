@@ -1,6 +1,6 @@
 {
 	"name": "Drone",
-	"version" : "1.0",
+	"version" : "1.2",
 	"manifest_version":2,
 	"description": "Service monitoring tool",
     "icons":{
@@ -24,6 +24,7 @@
         ],
         "persistent":true
     },
+    "options_page": "/Html/options.html",
     "web_accessible_resources": [
         "/Html/Bootstrap/img/check.png",
         "/Html/Bootstrap/img/removesign.png"
