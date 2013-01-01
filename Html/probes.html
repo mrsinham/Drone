@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+<head>
+    <title>Drone overview</title>
+
+    <link rel="stylesheet" href="Bootstrap/css/bootstrap-responsive.min.css" type="text/css" />
+    <link rel="stylesheet" href="Bootstrap/css/bootstrap.min.css" type="text/css" />
+
+
+    <!-- JavaScript and HTML must be in separate files for security. -->
+    <script src="/Configuration/servers.js"></script>
+    <script src="/Namespace.js"></script>
+    <script src="/Entity/Watch.js"></script>
+    <script src="/Storage/Engine.js"></script>
+    <script src="/Storage/WatchList.js"></script>
+    <script src="/Background/Configuration/Main.js"></script>
+
+    <script src="/Html/js/External/jquery.js"></script>
+    <script src="/Html/Bootstrap/js/bootstrap.min.js"></script>
+    <script src="/Html/js/View/Configuration/Main.js"></script>
+    <script src="/Html/js/Controller/Configuration/Main.js"></script>
+</head>
+<body>
+<!-- Drone header -->
+<div class="navbar">
+    <div class="navbar-inner">
+        <a class="brand" href="#"><i class="icon-home"></i> Drone surveillance room</a>
+        <ul class="nav">
+            <li class=""><a href="/Html/index.html">Home</a></li>
+            <li class="active"><a href="/Html/probes.html">Probes</a> </li>
+            <li class=""><a href="/Html/options.html">Configuration</a></li>
+        </ul>
+    </div>
+</div>
+
+<h3 style="margin-left:30px" id="buh"  data-html="tot">Configuration</h3>
+
+
+<div style="margin-left: 30px">
+
+    <h4 >Add probe :</h4>
+
+    <form id="addProbe">
+        <!-- Probe name -->
+        <label for="sProbeName">Name :</label>
+        <div class="input-append">
+            <input class="span2" id="sProbeName" type="text" value="">
+            <span class="add-on">No spaces</span>
+        </div>
+        <label for="sProbeUrl">Probe url :</label>
+        <div class="input-append">
+            <input class="span2" id="sProbeName" type="text" style="width: 300px" value="">
+            <span class="add-on">(ex.: http://10.10.10.10/my/probe.php)</span>
+        </div>
+        <label for="sProbeUrl">Hostname :</label>
+        <div class="input-append">
+            <input class="span2" id="sHostname" type="text" style="width: 300px" value="">
+            <span class="add-on">(ex.: www.myexample.com)</span>
+        </div>
+        <br/>
+        <button id="sAddNewProbe" class="btn btn-primary">Add probe</button>
+    </form>
+
+    <h4 >Declared probes :</h4>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Url</th>
+                <th>Hostname</th>
+                <th>Remove</th>
+            </tr>
+        </thead>
+
+    </table>
+</div>
+
+
+</body>
+</html>
