@@ -10,13 +10,13 @@ Background.Watcher.Engine = function()
     this.oWatchList = null;
     this.oLogger = null;
     this.bSendNotifications = true;
-
     this.bInited = false;
 
     this.sCurrentHost = 'toto.com';
-    this.oRequestUrl = null;
 
+    this.oRequestUrl = null;
     this.oStorageEngine = null;
+    this.oMainParametersEngine = null;
 };
 
 /************************************
@@ -54,6 +54,7 @@ Background.Watcher.Engine.prototype.end = function()
 };
 
 Background.Watcher.Engine.prototype.watchAllUrl = function() {
+    this._updateMainParameters();
     for (var i = 0; i < this.aConfiguration.length; i++) {
         /**
          * Only if it must be watched
@@ -298,3 +299,25 @@ Background.Watcher.Engine.prototype.getStorageEngine = function() {
     }
     return this.oStorageEngine;
 };
+
+Background.Watcher.Engine.prototype._updateMainParameters = function() {
+    var sNotification = this._getMainParametersEngine().getNotifications();
+    switch (sNotification) {
+        case 'true':
+            this.bSendNotifications = true;
+            break;
+        case 'false':
+            this.bSendNotifications = false;
+            break
+    }
+}
+
+/**
+ * @return Background.Configuration.Main
+ */
+Background.Watcher.Engine.prototype._getMainParametersEngine = function() {
+    if (null === this.oMainParametersEngine) {
+        this.oMainParametersEngine = new Background.Configuration.Main();
+    }
+    return this.oMainParametersEngine;
+}

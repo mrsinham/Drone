@@ -14,6 +14,7 @@
             "/Namespace.js",
             "/Background/Log.js",
             "/Background/Configuration/Watchers.js",
+            "/Background/Configuration/Main.js",
             "/Entity/Watch.js",
             "/Entity/WatchList.js",
             "/Storage/Engine.js",

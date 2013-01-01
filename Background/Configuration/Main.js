@@ -4,6 +4,8 @@
  */
 Background.Configuration.Main = function() {
     this.bDefaultNotificationStatus =  true;
+    this.iDefaultBackgroundMillisecCheck = 2000;
+    this.iDefaultFrontendRefreshMillisec = 2000;
 };
 
 Background.Configuration.Main.prototype.setNotifications = function(bNotification) {
@@ -16,4 +18,28 @@ Background.Configuration.Main.prototype.getNotifications = function() {
         return this.bDefaultNotificationStatus;
     }
     return localStorage.bNotifications;
+};
+
+Background.Configuration.Main.prototype.setBackgroundCheckMillisec = function(iMillisec) {
+    localStorage.iBackgroundCheckMillisec = iMillisec;
+};
+
+
+Background.Configuration.Main.prototype.getBackgroundCheckMillisec = function() {
+    if (typeof(localStorage.iBackgroundCheckMillisec) === 'undefined') {
+        return this.iDefaultBackgroundMillisecCheck;
+    }
+    return localStorage.iBackgroundCheckMillisec;
+};
+
+Background.Configuration.Main.prototype.setFrontRefreshMillisec = function(iMillisec) {
+    localStorage.iFrontRefreshMillisec = iMillisec;
+};
+
+
+Background.Configuration.Main.prototype.getFrontRefreshMillisec = function() {
+    if (typeof(localStorage.iFrontRefreshMillisec) === 'undefined') {
+        return this.iDefaultFrontendRefreshMillisec;
+    }
+    return localStorage.iFrontRefreshMillisec;
 };
