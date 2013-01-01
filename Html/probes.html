@@ -17,8 +17,8 @@
 
     <script src="/Html/js/External/jquery.js"></script>
     <script src="/Html/Bootstrap/js/bootstrap.min.js"></script>
-    <script src="/Html/js/View/Configuration/Main.js"></script>
-    <script src="/Html/js/Controller/Configuration/Main.js"></script>
+    <script src="/Html/js/View/Configuration/Probes.js"></script>
+    <script src="/Html/js/Controller/Configuration/Probes.js"></script>
 </head>
 <body>
 <!-- Drone header -->
@@ -42,20 +42,29 @@
 
     <form id="addProbe">
         <!-- Probe name -->
-        <label for="sProbeName">Name :</label>
-        <div class="input-append">
-            <input class="span2" id="sProbeName" type="text" value="">
-            <span class="add-on">No spaces</span>
+        <div class="control-group">
+            <label for="sProbeName">Name :</label>
+            <div class="input-append">
+                <input class="span2" id="sProbeName" type="text" placeholder="MyProbe">
+                <span class="add-on">No spaces</span>
+            </div>
+            <span class="help-inline"></span>
         </div>
-        <label for="sProbeUrl">Probe url :</label>
-        <div class="input-append">
-            <input class="span2" id="sProbeName" type="text" style="width: 300px" value="">
-            <span class="add-on">(ex.: http://10.10.10.10/my/probe.php)</span>
+        <div class="control-group">
+            <label for="sProbeUrl">Probe url :</label>
+            <div class="input-append">
+                <input class="span2" id="sProbeUrl" type="text" style="width: 300px" placeholder="http://10.10.10.10/my/probe.php">
+                <span class="add-on">The url to call</span>
+            </div>
+            <span class="help-inline"></span>
         </div>
-        <label for="sProbeUrl">Hostname :</label>
-        <div class="input-append">
-            <input class="span2" id="sHostname" type="text" style="width: 300px" value="">
-            <span class="add-on">(ex.: www.myexample.com)</span>
+        <div class="control-group">
+            <label for="sProbeUrl">Hostname :</label>
+            <div class="input-append">
+                <input class="span2" id="sHostname" type="text" style="width: 300px" placeholder="www.example.com">
+                <span class="add-on">Asking for which domain</span>
+            </div>
+            <span class="help-inline"></span>
         </div>
         <br/>
         <button id="sAddNewProbe" class="btn btn-primary">Add probe</button>
