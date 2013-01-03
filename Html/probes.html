@@ -11,8 +11,10 @@
     <script src="/Configuration/servers.js"></script>
     <script src="/Namespace.js"></script>
     <script src="/Entity/Watch.js"></script>
+    <script src="/Entity/Probe.js"></script>
     <script src="/Storage/Engine.js"></script>
     <script src="/Storage/WatchList.js"></script>
+    <script src="/Storage/Probe.js"></script>
     <script src="/Background/Configuration/Main.js"></script>
 
     <script src="/Html/js/External/jquery.js"></script>
@@ -71,7 +73,7 @@
     </form>
 
     <h4 >Declared probes :</h4>
-    <table class="table table-bordered">
+    <table class="table table-bordered" id="probeList">
         <thead>
             <tr>
                 <th>Name</th>
@@ -80,7 +82,12 @@
                 <th>Remove</th>
             </tr>
         </thead>
-
+        <tr class="probe">
+            <td>Toto</td>
+            <td>http://test.com</td>
+            <td>example.com</td>
+            <td><span class="btn btn-danger">Remove</span> </td>
+        </tr>
     </table>
 </div>
 

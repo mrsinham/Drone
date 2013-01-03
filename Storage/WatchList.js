@@ -1,6 +1,7 @@
 Storage.WatchList = function()
 {
     this.oStorageEngine = null;
+    this.sObjectStore = 'WatchList';
     this.bOpened = false;
 };
 
@@ -17,7 +18,7 @@ Storage.WatchList.prototype.saveWatch = function(oWatch, fCallback) {
                 hostname: oWatch.getHostname(),
                 environment: oWatch.getAllEnvironments()
             };
-            oThat._getStorageEngine().saveData(oData, function() {
+            oThat._getStorageEngine().saveData(oThat.sObjectStore, oData, function() {
                 fCallback();
             });
         });
@@ -26,22 +27,23 @@ Storage.WatchList.prototype.saveWatch = function(oWatch, fCallback) {
 };
 
 Storage.WatchList.prototype.getAllWatch = function(fCallback) {
-
     var oThat = this;
+
+
     this.open(function(){
-        oThat._getStorageEngine().getData(function(oRow){
+        console.log('tototo');
+        oThat._getStorageEngine().getData(oThat.sObjectStore, function(oRow){
             var oWatch = oThat._transformIndexedDbRowToWatchList(oRow);
             fCallback(oWatch);
         });
     });
-
 };
 
 Storage.WatchList.prototype.count = function(fCallback) {
 
     var oThat = this;
     this.open(function(){
-        oThat._getStorageEngine().count(function(iCount){
+        oThat._getStorageEngine().count(oThat.sObjectStore, function(iCount){
             fCallback(iCount);
         });
     });
@@ -52,7 +54,7 @@ Storage.WatchList.prototype.getWatch = function(sName, fCallback) {
 
     var oThat = this;
     this.open(function(){
-        oThat._getStorageEngine().getData(function(oRow){
+        oThat._getStorageEngine().getData(oThat.sObjectStore, function(oRow){
             var oWatch = oThat._transformIndexedDbRowToWatchList(oRow);
             fCallback(oWatch);
         }, sName);
@@ -78,12 +80,13 @@ Storage.WatchList.prototype.open = function(fCallback) {
         fCallback();
         oThat.bOpened = true;
     });
+
 };
 
 Storage.WatchList.prototype._getStorageEngine = function()
 {
     if (null === this.oStorageEngine) {
-        this.oStorageEngine = new Storage.Engine('DroneDb', 'Watchlist', 'name', '456');
+        this.oStorageEngine = new Storage.Engine();
     }
     return this.oStorageEngine;
 }

@@ -5,6 +5,7 @@ View.Configuration.Probes = function() {
     this.sAddProbeUrlSelector = '#sProbeUrl';
     this.sAddProbeNameSelector = '#sProbeName';
     this.sAddProbeHostnameSelector = '#sHostname';
+    this.sProbeListSelector = '#probeList';
 
     this.fProbeSaver = null;
 
@@ -17,6 +18,10 @@ View.Configuration.Probes = function() {
         hostname: null
     };
 };
+
+/**
+ * PROBE FORM
+ */
 
 View.Configuration.Probes.prototype.watchAddProbeForm = function() {
     var oThat = this;
@@ -114,4 +119,24 @@ View.Configuration.Probes.prototype._removeAllErrors = function() {
 
 View.Configuration.Probes.prototype.setProbeSaver = function(fProveSaver) {
     this.fProbeSaver = fProveSaver;
+};
+
+
+/**
+ * PROBE LIST MANAGEMENT
+ */
+
+View.Configuration.Probes.prototype.removeAllProbe = function(fProveSaver) {
+    $(this.sProbeListSelector).find('tr.probe').detach();
+};
+
+View.Configuration.Probes.prototype.addProbe = function(oProbe) {
+    var sHtml = '';
+    sHtml += '<tr class="probe">';
+    sHtml += '<td>'+oProbe.getName()+'</td>';
+    sHtml += '<td>'+oProbe.getUrl()+'</td>';
+    sHtml += '<td>'+oProbe.getHostname()+'</td>';
+    sHtml += '<td><span class="btn btn-danger">Remove</span></td>';
+    sHtml += '</td>';
+    $(this.sProbeListSelector).append(sHtml);
 };
