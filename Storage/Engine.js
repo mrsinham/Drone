@@ -109,7 +109,7 @@ Storage.Engine.prototype.getData = function (sObjectStore, fCallbackForEachRow, 
     oCursor.onsuccess = function(eEvent) {
         var oResult = eEvent.target.result;
         if (false === oResult || null === oResult) {
-            return;
+            return false;
         }
         fCallbackForEachRow(oResult.value);
         oResult.continue();
