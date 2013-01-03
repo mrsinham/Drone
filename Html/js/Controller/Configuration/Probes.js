@@ -9,7 +9,12 @@ Controller.Configuration.Probes = function() {
     this._getView().setProbeSaver(function(oProbe){
         oThat._saveProbe(oProbe);
     });
+    this._getView().setProbeDeleter(function(oProbe){
+        oThat._deleteProbe(oProbe);
+    });
+
     this._getView().watchAddProbeForm();
+    this._getView().watchDeleteProbe();
 };
 
 Controller.Configuration.Probes.prototype._saveProbe = function(oProbe) {
@@ -34,7 +39,11 @@ Controller.Configuration.Probes.prototype.updateProbeList = function() {
 };
 
 Controller.Configuration.Probes.prototype._deleteProbe = function(sProbeName) {
-
+    var oThat = this;
+    this._getProbeStorage().delete(sProbeName, function(e){
+        oThat._getView().removeProbe(sProbeName);
+        //oThat.updateProbeList();
+    });
 };
 
 /**

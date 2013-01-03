@@ -44,6 +44,17 @@ Storage.Probes.prototype.count = function(fCallback) {
 
 };
 
+Storage.Probes.prototype.delete = function(sName, fCallback) {
+
+    var oThat = this;
+    this.open(function(){
+        oThat._getStorageEngine().delete(oThat.sObjectStore, sName, function(eEvent){
+            fCallback(eEvent);
+        });
+    });
+
+};
+
 Storage.Probes.prototype.getProbe = function(sName, fCallback) {
 
     var oThat = this;

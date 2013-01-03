@@ -64,6 +64,16 @@ Storage.Engine.prototype.saveData = function (sObjectStore, oData, fCallback) {
     };
 };
 
+Storage.Engine.prototype.delete = function (sObjectStore, sKey, fCallback) {
+
+    var oObjectStore = this._getObjectStore(sObjectStore);
+    console.log(sObjectStore, sKey, fCallback)
+    var oMyRequest = oObjectStore.delete(sKey);
+    oMyRequest.onsuccess = function(eEvent) {
+        fCallback(eEvent);
+    };
+};
+
 Storage.Engine.prototype.count = function (sObjectStore, fCallback) {
 
     var oObjectStore = this._getObjectStore(sObjectStore);
@@ -72,6 +82,7 @@ Storage.Engine.prototype.count = function (sObjectStore, fCallback) {
         fCallback(eEvent.target.result);
     };
 };
+
 
 /**
  * Fetch data from indexedDb

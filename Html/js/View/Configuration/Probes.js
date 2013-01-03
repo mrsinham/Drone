@@ -8,6 +8,7 @@ View.Configuration.Probes = function() {
     this.sProbeListSelector = '#probeList';
 
     this.fProbeSaver = null;
+    this.fProbeDeleter = null;
 
     this.oUrlRegexp = new RegExp(
         "^(http|https|ftp)\://([a-zA-Z0-9\.\-]+(\:[a-zA-Z0-9\.&amp;%\$\-]+)*@)*((25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])|([a-zA-Z0-9\-]+\.)*[a-zA-Z0-9\-]+\.(com|edu|gov|int|mil|net|org|biz|arpa|info|name|pro|aero|coop|museum|[a-zA-Z]{2}))(\:[0-9]+)*(/($|[a-zA-Z0-9\.\,\?\'\\\+&amp;%\$#\=~_\-]+))*$");
@@ -130,13 +131,29 @@ View.Configuration.Probes.prototype.removeAllProbe = function(fProveSaver) {
     $(this.sProbeListSelector).find('tr.probe').detach();
 };
 
+View.Configuration.Probes.prototype.removeProbe = function(sProbeName) {
+    $(this.sProbeListSelector).find('tr[data-probe="'+sProbeName+'"]').detach();
+};
+
 View.Configuration.Probes.prototype.addProbe = function(oProbe) {
     var sHtml = '';
-    sHtml += '<tr class="probe">';
+    sHtml += '<tr class="probe" data-probe="'+oProbe.getName()+'">';
     sHtml += '<td>'+oProbe.getName()+'</td>';
     sHtml += '<td>'+oProbe.getUrl()+'</td>';
     sHtml += '<td>'+oProbe.getHostname()+'</td>';
-    sHtml += '<td><span class="btn btn-danger">Remove</span></td>';
+    sHtml += '<td><span class="btn btn-danger removeProbe">Remove</span></td>';
     sHtml += '</td>';
     $(this.sProbeListSelector).append(sHtml);
+};
+
+View.Configuration.Probes.prototype.setProbeDeleter = function(fProveDeleter) {
+    this.fProbeDeleter = fProveDeleter;
+};
+
+View.Configuration.Probes.prototype.watchDeleteProbe = function() {
+    var oThat = this;
+    $(this.sProbeListSelector+' span.removeProbe').live('click', function(eEvent){
+        var sProbeName = $(eEvent.currentTarget).closest('tr.probe').data('probe');
+        oThat.fProbeDeleter(sProbeName);
+    });
 };
