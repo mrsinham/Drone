@@ -27,6 +27,9 @@ Storage.Probes.prototype.getAllProbe = function(fCallback) {
     var oThat = this;
     this.open(function(){
         oThat._getStorageEngine().getData(oThat.sObjectStore, function(oRow){
+            if (false === oRow) {
+                fCallback(false);
+            }
             var oWatch = oThat._transformIndexedDbRowToProbe(oRow);
             fCallback(oWatch);
         });
@@ -60,6 +63,9 @@ Storage.Probes.prototype.getProbe = function(sName, fCallback) {
     var oThat = this;
     this.open(function(){
         oThat._getStorageEngine().getData(oThat.sObjectStore, function(oRow){
+            if (false === oRow) {
+                fCallback(false);
+            }
             var oProbe = oThat._transformIndexedDbRowToProbe(oRow);
             fCallback(oProbe);
         }, sName);

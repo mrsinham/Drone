@@ -33,6 +33,9 @@ Storage.WatchList.prototype.getAllWatch = function(fCallback) {
     this.open(function(){
         console.log('tototo');
         oThat._getStorageEngine().getData(oThat.sObjectStore, function(oRow){
+            if (false === oRow) {
+                fCallback(false);
+            }
             var oWatch = oThat._transformIndexedDbRowToWatchList(oRow);
             fCallback(oWatch);
         });
@@ -50,11 +53,46 @@ Storage.WatchList.prototype.count = function(fCallback) {
 
 };
 
+Storage.WatchList.prototype.delete = function(sName, fCallback) {
+
+    var oThat = this;
+    this.open(function(){
+        oThat._getStorageEngine().delete(oThat.sObjectStore, sName, function(eEvent){
+            fCallback(eEvent);
+        });
+    });
+
+};
+
+Storage.WatchList.prototype.cleanWatchIfNotInList = function(aList, fCallback) {
+
+    var oThat = this;
+    this.open(function(){
+
+        oThat.getAllWatch(function(oWatch){
+            if (false === oWatch) {
+                fCallback();
+                return;
+            }
+            if (-1 === $.inArray(oWatch.getName(), aList)) {
+                // Watch no present in probe list, removing it
+                oThat.delete(oWatch.getName(), function(){
+
+                });
+            }
+        });
+    });
+
+};
+
 Storage.WatchList.prototype.getWatch = function(sName, fCallback) {
 
     var oThat = this;
     this.open(function(){
         oThat._getStorageEngine().getData(oThat.sObjectStore, function(oRow){
+            if (false === oRow) {
+                fCallback(false);
+            }
             var oWatch = oThat._transformIndexedDbRowToWatchList(oRow);
             fCallback(oWatch);
         }, sName);

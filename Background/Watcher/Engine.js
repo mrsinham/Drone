@@ -17,6 +17,7 @@ Background.Watcher.Engine = function()
     this.oRequestUrl = null;
     this.oStorageEngine = null;
     this.oMainParametersEngine = null;
+    this.oProbeStorage = null;
 };
 
 /************************************
@@ -33,7 +34,7 @@ Background.Watcher.Engine.prototype.start = function()
     var oThat = this;
     var fLoop = function()
     {
-        oThat.watchAllUrl();
+        oThat.loadAndRun();
         if (oThat.bRunning === true) {
             setTimeout(function(){
                 fLoop();
@@ -298,6 +299,42 @@ Background.Watcher.Engine.prototype.getStorageEngine = function() {
         this.oStorageEngine = Storage.WatchList.getInstance();
     }
     return this.oStorageEngine;
+};
+
+Background.Watcher.Engine.prototype.loadAndRun = function() {
+    var oProbeStorage = this._getProbeStorage();
+    var oThat = this;
+
+    var aProbeList = [];
+    var aProbeNameList = [];
+
+    oProbeStorage.getAllProbe(function(oProbe){
+        if (oProbe !== false) {
+            // Filling data
+            aProbeList.push({
+                name: oProbe.getName(),
+                hostname: oProbe.getHostname(),
+                url:oProbe.getUrl()
+            });
+            aProbeNameList.push(oProbe.getName());
+        } else {
+            console.log('loadAndRunEnd');
+            // processing it
+            oThat.getStorageEngine().cleanWatchIfNotInList(aProbeNameList, function(eEvent){
+                // Cleaned, use the new configuration
+                oThat.aConfiguration = aProbeList;
+                console.log(aProbeList);
+                oThat.watchAllUrl();
+            });
+        }
+    })
+};
+
+Background.Watcher.Engine.prototype._getProbeStorage = function() {
+    if (null === this.oProbeStorage) {
+        this.oProbeStorage = new Storage.Probes();
+    }
+    return this.oProbeStorage;
 };
 
 Background.Watcher.Engine.prototype._updateMainParameters = function() {
