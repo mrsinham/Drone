@@ -6,6 +6,7 @@ Background.Watcher.Engine = function()
     this.REQUEST_NOTDONE = 3;
     this.REQUEST_INPROGRESS = 4;
     this.iLoopInterval = 2000;
+    this.iRequestTimeout = 2000;
     this.aConfiguration = [];
     this.oWatchList = null;
     this.oLogger = null;
@@ -91,6 +92,12 @@ Background.Watcher.Engine.prototype.watchAnUrl = function(aMyServerToWatch) {
     oRequest.onreadystatechange = function() {
         _oThat._processResponse(oRequest, aMyServerToWatch, oStartDate);
     };
+    /**
+     * The request must be canceled if call excess ...
+     */
+    oRequest.timeOut = setTimeout(function(){
+        oRequest.abort();
+    }, this.iRequestTimeout);
     oRequest.send();
 };
 
@@ -161,15 +168,13 @@ Background.Watcher.Engine.prototype._processResponse = function(oRequest, aMySer
             oWatch.setResponseText('Request in progress...');
             break;
         case 4:
+            clearTimeout(oRequest.timeOut);
             oWatch.setState(this.REQUEST_OK);
             oWatch.setEndRequestTime(new Date());
 
             // Ok, we need to process received content
             try {
-
                 var oContentResponse = JSON.parse(oRequest.responseText);
-
-
             } catch (eException) {
                 oWatch.setState(this.REQUEST_FAILED);
                 oWatch.setResponseText('Unable to parse request to ' + aMyServerToWatch.url + ' not json response');
@@ -181,6 +186,9 @@ Background.Watcher.Engine.prototype._processResponse = function(oRequest, aMySer
              */
             if (true === this.bSendNotifications) {
                 this.getStorageEngine().getWatch(oWatch.getName(), function(oFetchedWatch){
+                    if (false === oFetchedWatch) {
+                        return false;
+                    }
                     if (true === oFetchedWatch.isOk() && false === oWatch.isOk()) {
                         // Ok, something went bad, warn user
                         var notification = webkitNotifications.createNotification(
@@ -202,12 +210,8 @@ Background.Watcher.Engine.prototype._processResponse = function(oRequest, aMySer
             }
 
             this.getStorageEngine().saveWatch(oWatch, function(eEvent) {});
-
-
             break;
 
-        default:
-            console.log(oWatch, oRequest, aMyServerToWatch);
     }
 
 
@@ -340,6 +344,9 @@ Background.Watcher.Engine.prototype._getProbeStorage = function() {
 
 Background.Watcher.Engine.prototype._updateMainParameters = function() {
     var sNotification = this._getMainParametersEngine().getNotifications();
+    var sRequestEvery = this._getMainParametersEngine().getBackgroundCheckMillisec();
+    this.iLoopInterval = parseInt(sRequestEvery, 10);
+    this.iRequestTimeout = parseInt(this._getMainParametersEngine().getBackgroundRequestTimeout(), 10);
     switch (sNotification) {
         case 'true':
             this.bSendNotifications = true;
