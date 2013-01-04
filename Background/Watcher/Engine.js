@@ -205,6 +205,9 @@ Background.Watcher.Engine.prototype._processResponse = function(oRequest, aMySer
 
 
             break;
+
+        default:
+            console.log(oWatch, oRequest, aMyServerToWatch);
     }
 
 

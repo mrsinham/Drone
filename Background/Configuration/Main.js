@@ -6,7 +6,12 @@ Background.Configuration.Main = function() {
     this.bDefaultNotificationStatus =  true;
     this.iDefaultBackgroundMillisecCheck = 2000;
     this.iDefaultFrontendRefreshMillisec = 2000;
+    this.iDefaultBackgroundRequestTimeout = 2000;
 };
+
+/***************************************
+ * Front notifications
+ ***************************************/
 
 Background.Configuration.Main.prototype.setNotifications = function(bNotification) {
     localStorage.bNotifications = bNotification;
@@ -20,6 +25,10 @@ Background.Configuration.Main.prototype.getNotifications = function() {
     return localStorage.bNotifications;
 };
 
+/***************************************
+ * Background check url every
+ ***************************************/
+
 Background.Configuration.Main.prototype.setBackgroundCheckMillisec = function(iMillisec) {
     localStorage.iBackgroundCheckMillisec = iMillisec;
 };
@@ -31,6 +40,26 @@ Background.Configuration.Main.prototype.getBackgroundCheckMillisec = function() 
     }
     return localStorage.iBackgroundCheckMillisec;
 };
+
+/***************************************
+ * Background request timeout
+ ***************************************/
+
+Background.Configuration.Main.prototype.setBackgroundRequestTimeout = function(iMillisec) {
+    localStorage.iBackgroundRequestTimeout = iMillisec;
+};
+
+
+Background.Configuration.Main.prototype.getBackgroundRequestTimeout = function() {
+    if (typeof(localStorage.iBackgroundRequestTimeout) === 'undefined') {
+        return this.iDefaultBackgroundRequestTimeout;
+    }
+    return localStorage.iBackgroundRequestTimeout;
+};
+
+/***************************************
+ * Background refresh display every
+ ***************************************/
 
 Background.Configuration.Main.prototype.setFrontRefreshMillisec = function(iMillisec) {
     localStorage.iFrontRefreshMillisec = iMillisec;

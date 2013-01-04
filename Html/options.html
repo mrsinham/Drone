@@ -38,26 +38,49 @@
 <h4 style="margin-left:30px">Main options :</h4>
 
 <div style="margin-left: 30px">
-    <table class="table">
+    <table class="table" id="mainOptions">
         <tr>
             <td>Notifications</td><td><button id="sNotification" class="btn btn-info">Yes</button></td>
 
         </tr>
         <tr>
-            <td>Check every</td>
+            <td>Request timeout</td>
             <td>
-                <div class="input-append">
-                    <input class="span2" id="" type="text" value="2">
-                    <span class="add-on"> seconds</span>
+                <div class="control-group">
+                    <div class="input-append"  data-timer="requestTimeout">
+                        <span class="add-on">Seconds</span>
+                        <input class="span2" type="text" value="2">
+                        <span class="btn btn-info timerSave">Save</span>
+                    </div>
+                    <span class="help-inline hide "></span>
+
                 </div>
             </td>
         </tr>
         <tr>
+            <td>Check every</td>
+            <td>
+                <div class="control-group">
+                    <div class="input-append"  data-timer="checkEvery">
+                        <span class="add-on">Seconds</span>
+                        <input class="span2" type="text" value="2">
+                        <span class="btn btn-info timerSave">Save</span>
+                    </div>
+                    <span class="help-inline hide "></span>
+                </div>
+            </td>
+
+        </tr>
+        <tr>
             <td>Refresh display every</td>
             <td>
-                <div class="input-append">
-                    <input class="span2" id="appendedInputButton" type="text" value="2">
-                    <span class="add-on"> seconds</span>
+                <div class="control-group">
+                    <div class="input-append" data-timer="refreshEvery">
+                        <span class="add-on"> seconds</span>
+                        <input class="span2" type="text" value="2">
+                        <span class="btn btn-info timerSave">Save</span>
+                    </div>
+                    <span class="help-inline hide "></span>
                 </div>
             </td>
         </tr>
