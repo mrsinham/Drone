@@ -27,14 +27,13 @@ Storage.WatchList.prototype.saveWatch = function(oWatch, fCallback) {
 };
 
 Storage.WatchList.prototype.getAllWatch = function(fCallback) {
+
     var oThat = this;
-
-
     this.open(function(){
-        console.log('tototo');
         oThat._getStorageEngine().getData(oThat.sObjectStore, function(oRow){
             if (false === oRow) {
                 fCallback(false);
+                return;
             }
             var oWatch = oThat._transformIndexedDbRowToWatchList(oRow);
             fCallback(oWatch);
@@ -92,6 +91,7 @@ Storage.WatchList.prototype.getWatch = function(sName, fCallback) {
         oThat._getStorageEngine().getData(oThat.sObjectStore, function(oRow){
             if (false === oRow) {
                 fCallback(false);
+                return;
             }
             var oWatch = oThat._transformIndexedDbRowToWatchList(oRow);
             fCallback(oWatch);

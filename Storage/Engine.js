@@ -17,23 +17,16 @@
 };
 
 Storage.Engine.prototype.open = function(fCallback) {
-        var oThat = this;
-        var oRequestToTheBase = indexedDB.open(this.sDatabaseName, this.sVersion);
-    console.log('ouii', this.sDatabaseName, this.sVersion);
+    var oThat = this;
+    var oRequestToTheBase = indexedDB.open(this.sDatabaseName, this.sVersion);
     oRequestToTheBase.onsuccess = function(eEvent) {
-        console.log('tototo');
             oThat.oDatabase = eEvent.target.result;
             fCallback();
         };
 
         oRequestToTheBase.onupgradeneeded = function(e) {
-
-            console.log('upgradeNeed');
             var oDatabase = event.target.result;
             for (var i = 0; i < oThat.oBaseDefinition.length; i++) {
-                console.log(oThat.oBaseDefinition[i].objectStore, {
-                    keyPath: oThat.oBaseDefinition[i].keyPath
-                });
                 var oStore = oDatabase.createObjectStore(oThat.oBaseDefinition[i].objectStore, {
                     keyPath: oThat.oBaseDefinition[i].keyPath
                 });
@@ -67,7 +60,6 @@ Storage.Engine.prototype.saveData = function (sObjectStore, oData, fCallback) {
 Storage.Engine.prototype.delete = function (sObjectStore, sKey, fCallback) {
 
     var oObjectStore = this._getObjectStore(sObjectStore);
-    console.log(sObjectStore, sKey, fCallback)
     var oMyRequest = oObjectStore.delete(sKey);
     oMyRequest.onsuccess = function(eEvent) {
         fCallback(eEvent);

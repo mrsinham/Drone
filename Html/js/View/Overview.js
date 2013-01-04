@@ -6,7 +6,7 @@ View.Overview = function() {
 View.Overview.prototype.addWatch = function(oWatch) {
     if ($('#watch-'+oWatch.getName()).length === 0) {
         var sHtmlToAdd = '';
-        sHtmlToAdd += '<tr class="watch" id="watch-'+oWatch.getName()+'">';
+        sHtmlToAdd += '<tr class="watch" data-watch="'+oWatch.getName()+'" id="watch-'+oWatch.getName()+'">';
         sHtmlToAdd += '<td class="name"></td>';
         sHtmlToAdd += '<td class="httpcode"></td>';
         sHtmlToAdd += '<td class="applications"></td>';
@@ -25,6 +25,15 @@ View.Overview.prototype.addWatch = function(oWatch) {
 
     $('.jsTooltip').tooltip();
 
+};
+
+View.Overview.prototype.removeWatchThatAreNotInList = function(aList) {
+    $(this.sOverviewSelector).find('tr.watch').each(function(iIndex, oElement){
+        var oElement = $(oElement);
+        if (-1 === $.inArray(oElement.data('watch'), aList)) {
+            oElement.detach();
+        }
+    });
 };
 
 View.Overview.prototype.updateCounter = function(iCount) {

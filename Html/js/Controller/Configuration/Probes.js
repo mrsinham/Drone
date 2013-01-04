@@ -33,7 +33,9 @@ Controller.Configuration.Probes.prototype.updateProbeList = function() {
     var oThat = this;
     this._getView().removeAllProbe();
     this._getProbeStorage().getAllProbe(function(oEachProbe){
-        console.log(oEachProbe);
+        if (false === oEachProbe) {
+            return;
+        }
         oThat._getView().addProbe(oEachProbe);
     });
 };

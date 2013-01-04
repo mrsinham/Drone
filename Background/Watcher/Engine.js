@@ -318,12 +318,10 @@ Background.Watcher.Engine.prototype.loadAndRun = function() {
             });
             aProbeNameList.push(oProbe.getName());
         } else {
-            console.log('loadAndRunEnd');
             // processing it
             oThat.getStorageEngine().cleanWatchIfNotInList(aProbeNameList, function(eEvent){
                 // Cleaned, use the new configuration
                 oThat.aConfiguration = aProbeList;
-                console.log(aProbeList);
                 oThat.watchAllUrl();
             });
         }

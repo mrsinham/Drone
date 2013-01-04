@@ -9,8 +9,15 @@ Controller.Overview.prototype.updateWatchList = function()
 
     var oThat = this;
     // Fetching watchlist
+    var aList = [];
     this._getWatchListStorage().getAllWatch(function(oWatch){
+        if (false === oWatch) {
+            oThat._getView().removeWatchThatAreNotInList(aList);
+            return;
+        }
         oThat._getView().addWatch(oWatch);
+        aList.push(oWatch.getName());
+
     });
 };
 

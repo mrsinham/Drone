@@ -108,7 +108,6 @@ View.Configuration.Probes.prototype._displayError = function(sInputIdSelector, s
         throw 'Unable to locate input id for displaying error';
     }
     var oControlGroup = oInput.closest('.control-group');
-    console.log(oControlGroup);
     oControlGroup.addClass('error').find('.help-inline').html(sError);
 };
 
