@@ -168,18 +168,30 @@ Background.Watcher.Engine.prototype._processResponse = function(oRequest, aMySer
             oWatch.setResponseText('Request in progress...');
             break;
         case 4:
+
             clearTimeout(oRequest.timeOut);
+
             oWatch.setState(this.REQUEST_OK);
             oWatch.setEndRequestTime(new Date());
 
-            // Ok, we need to process received content
-            try {
-                var oContentResponse = JSON.parse(oRequest.responseText);
-            } catch (eException) {
-                oWatch.setState(this.REQUEST_FAILED);
-                oWatch.setResponseText('Unable to parse request to ' + aMyServerToWatch.url + ' not json response');
+            if (0 === oRequest.status) {
+                // Request failed, not found at all
+                oWatch.setHttpCode(0);
+                oWatch.setResponseText('Url not found');
+            } else {
+                // Ok, we need to process received content
+
+                try {
+                    var oContentResponse = JSON.parse(oRequest.responseText);
+                    this._buildResponse(oContentResponse, oWatch);
+                } catch (eException) {
+                    oWatch.setHttpCode(oRequest.status);
+                    oWatch.setState(this.REQUEST_FAILED);
+                    oWatch.setResponseText('Unable to parse request to ' + aMyServerToWatch.url + ' not json response');
+                }
+
             }
-            this._buildResponse(oContentResponse, oWatch);
+
 
             /**
              * Was good before ?
@@ -253,7 +265,7 @@ Background.Watcher.Engine.prototype._parseApplicationsSection = function(oRespon
                 this.getLogger().warning('Unable to add application without name field - watch ('+oWatch.getUrl()+ ')');
                 return false;
             }
-            if (typeof (oJSONApplication.httpCode) === 'undefined') {
+            if (typeof (oJSONApplication.code) === 'undefined') {
                 this.getLogger().warning('Unable to add application without httpCode field - watch ('+oWatch.getUrl()+ ')');
                 return false;
             }
@@ -261,7 +273,7 @@ Background.Watcher.Engine.prototype._parseApplicationsSection = function(oRespon
                 this.getLogger().warning('Unable to add application without response field - watch ('+oWatch.getUrl()+ ')');
                 return false;
             }
-            oWatch.setApplication(oJSONApplication.name, oJSONApplication.httpCode, oJSONApplication.response);
+            oWatch.setApplication(oJSONApplication.name, oJSONApplication.code, oJSONApplication.response);
         }
     }
 };
