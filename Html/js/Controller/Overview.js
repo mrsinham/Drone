@@ -64,7 +64,7 @@ $(document).ready(function() {
 
         setTimeout(function(){
             fLoop();
-        }, 5000);
+        }, 10000);
 
 
     };

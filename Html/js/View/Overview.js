@@ -1,6 +1,8 @@
 View.Overview = function() {
     this.sOverviewSelector = '#Overview';
     this.sOverviewCounterSelector = '#OverviewCounter';
+    this.sEnvironmentButtonSelector = '.environmentButton';
+    this._watchEnvironmentSection();
 };
 
 View.Overview.prototype.addWatch = function(oWatch) {
@@ -10,7 +12,7 @@ View.Overview.prototype.addWatch = function(oWatch) {
         sHtmlToAdd += '<td class="name"></td>';
         sHtmlToAdd += '<td class="httpcode"></td>';
         sHtmlToAdd += '<td class="applications"></td>';
-        sHtmlToAdd += '<td class="environment"></td>';
+        sHtmlToAdd += '<td class="environment"><a class="btn environmentButton">Environment</a><div class="environmentContent"></div></td>';
         sHtmlToAdd += '</tr>';
         $(this.sOverviewSelector).append(sHtmlToAdd);
     }
@@ -20,7 +22,7 @@ View.Overview.prototype.addWatch = function(oWatch) {
     oRow.find('.name').html(this._createNameSection(oWatch))
     oRow.find('.httpcode').html(this._createHttpCodeSection(oWatch))
     oRow.find('.applications').html(this._createApplicationsSection(oWatch))
-    oRow.find('.environment').html(this._createEnvironmentSection(oWatch))
+    oRow.find('.environmentContent').html(this._createEnvironmentSection(oWatch))
 
 
     $('.jsTooltip').tooltip();
@@ -94,3 +96,16 @@ View.Overview.prototype._createEnvironmentSection = function (oWatch) {
 View.Overview.prototype.emptyOverview = function() {
     $(this.sOverviewSelector+ ' tr.watch').detach();
 }
+
+View.Overview.prototype._watchEnvironmentSection = function() {
+    var oThat = this;
+    $(this.sEnvironmentButtonSelector).live('click', function(eEvent){
+        console.log('ttttt');
+        $(eEvent.currentTarget).popover({
+            title:'toto',
+            content:'tutu',
+            placement:'bottom'
+        }).popover('toggle');;
+        //$(eEvent.currentTarget).popover('toggle');
+    });
+};
