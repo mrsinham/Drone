@@ -3,6 +3,8 @@ View.Overview = function() {
     this.sOverviewCounterSelector = '#OverviewCounter';
     this.sEnvironmentButtonSelector = '.environmentButton';
     this._watchEnvironmentSection();
+    this.fModalShown;
+    this.fModalHidden;
 };
 
 View.Overview.prototype.addWatch = function(oWatch) {
@@ -12,7 +14,7 @@ View.Overview.prototype.addWatch = function(oWatch) {
         sHtmlToAdd += '<td class="name"></td>';
         sHtmlToAdd += '<td class="httpcode"></td>';
         sHtmlToAdd += '<td class="applications"></td>';
-        sHtmlToAdd += '<td class="environment"><a class="btn environmentButton">Environment</a><div class="environmentContent"></div></td>';
+        sHtmlToAdd += '<td class="environment"><div class="environmentContent"></div></td>';
         sHtmlToAdd += '</tr>';
         $(this.sOverviewSelector).append(sHtmlToAdd);
     }
@@ -24,6 +26,15 @@ View.Overview.prototype.addWatch = function(oWatch) {
     oRow.find('.applications').html(this._createApplicationsSection(oWatch))
     oRow.find('.environmentContent').html(this._createEnvironmentSection(oWatch))
 
+
+    var oNode = $("#modal-"+oWatch.getName());
+    var oThat = this;
+    oNode.on('show', function(){
+        oThat.fModalShown();
+    });
+    oNode.on('hidden', function(){
+        oThat.fModalHidden();
+    });
 
     $('.jsTooltip').tooltip();
 
@@ -83,12 +94,31 @@ View.Overview.prototype._createApplicationsSection = function (oWatch) {
 View.Overview.prototype._createEnvironmentSection = function (oWatch) {
     var oEnvironments = oWatch.getAllEnvironments();
     var sEnvironment = '';
+    sEnvironment += '<a href="#modal-'+oWatch.getName()+'" role="button" class="btn" data-toggle="modal">Environment</a>';
+
+    sEnvironment += '<div id="modal-'+oWatch.getName()+'" class="modal hide fade envModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel-'+oWatch.getName()+'" aria-hidden="true">';
+    sEnvironment += '<div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button><h3 id="modalLabel-'+oWatch.getName()+'">Environment</h3></div>';
+    sEnvironment += '<div class="modal-body">';
+
+    var iNumberOfEnv = 0;
     for (sEnvironmentName in oEnvironments) {
         if ('length' !== sEnvironmentName) {
             var mEnvironmentValue = oEnvironments[sEnvironmentName];
-            sEnvironment += '<strong>'+sEnvironmentName+'</strong> : <span class="label label-info" style="margin-right:5px">'+mEnvironmentValue+'</span>';
+            sEnvironment += '<strong>'+sEnvironmentName+'</strong> : <span class="label label-info" style="margin-right:5px">'+mEnvironmentValue+'</span><br/>';
+            iNumberOfEnv++;
         }
     }
+
+    if (0 === iNumberOfEnv) {
+        sEnvironment += '<strong>No infos</strong>';
+    }
+
+    sEnvironment += '</div>';
+    sEnvironment += '<div class="modal-footer"><button class="btn" data-dismiss="modal" aria-hidden="true">Close</button></div>';
+    sEnvironment += '</div>';
+
+
+
 
     return sEnvironment;
 }
@@ -99,6 +129,8 @@ View.Overview.prototype.emptyOverview = function() {
 
 View.Overview.prototype._watchEnvironmentSection = function() {
     var oThat = this;
+
+
     $(this.sEnvironmentButtonSelector).live('click', function(eEvent){
         console.log('ttttt');
         $(eEvent.currentTarget).popover({
@@ -109,3 +141,11 @@ View.Overview.prototype._watchEnvironmentSection = function() {
         //$(eEvent.currentTarget).popover('toggle');
     });
 };
+
+View.Overview.prototype.setOnModalHidden = function(fModalHidden) {
+    this.fModalHidden = fModalHidden;
+}
+
+View.Overview.prototype.setOnModalShown = function(fModalShown) {
+    this.fModalShown = fModalShown;
+}

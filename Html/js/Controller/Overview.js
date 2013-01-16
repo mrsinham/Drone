@@ -1,6 +1,36 @@
 Controller.Overview = function() {
     this.oWatchListStorage = null;
     this.oOverviewView = null;
+    this.bLoopOn = true;
+};
+
+Controller.Overview.prototype.run = function()
+{
+    var oThat = this;
+    var fLoop = function()
+    {
+        if (true === oThat.bLoopOn) {
+            oController.updateCounter();
+            oController.updateWatchList();
+        }
+
+        setTimeout(function(){
+
+                fLoop();
+
+        }, 10000);
+
+
+    };
+
+    this._getView().setOnModalShown(function(){
+        oThat.setLoopActive(false);
+    });
+
+    this._getView().setOnModalHidden(function(){
+        oThat.setLoopActive(true);
+    });
+    fLoop();
 };
 
 Controller.Overview.prototype.updateWatchList = function()
@@ -41,6 +71,12 @@ Controller.Overview.prototype._getWatchListStorage = function()
     return this.oWatchListStorage;
 };
 
+
+Controller.Overview.prototype.setLoopActive = function(bActive)
+{
+    this.bLoopOn = bActive;
+};
+
 Controller.Overview.prototype._getView = function()
 {
     if (null === this.oOverviewView) {
@@ -55,20 +91,8 @@ var oController = new Controller.Overview();
 $(document).ready(function() {
     // Handler for .ready() called.
 
+    oController.run();
 
 
-    var fLoop = function()
-    {
-        oController.updateCounter();
-        oController.updateWatchList();
-
-        setTimeout(function(){
-            fLoop();
-        }, 10000);
-
-
-    };
-
-    fLoop();
 
 });
