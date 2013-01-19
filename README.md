@@ -7,7 +7,14 @@ For the moment, no packaged version exists, so you need to install it via folder
 
 Screenshots
 ============
-[image]: https://raw.github.com/mrsinham/Drone/master/example/screenshots/home.jpg "Drone Home"
+
+Home 
+
+<img src="https://raw.github.com/mrsinham/Drone/master/example/screenshots/home.jpg">
+
+Home with one application down
+
+<img src="https://raw.github.com/mrsinham/Drone/master/example/screenshots/homeoneservicedown.jpg">
 
 Prequisite
 ==========
