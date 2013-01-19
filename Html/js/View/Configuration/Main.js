@@ -6,10 +6,10 @@ View.Configuration.Main = function() {
     this.fTimerCallback = null;
 };
 
-View.Configuration.Main.prototype.watch = function() {
+View.Configuration.Main.prototype.watch = function () {
     this._watchNotificationButton();
     this._watchTimers();
-}
+};
 
 View.Configuration.Main.prototype._watchNotificationButton = function() {
     var oThat = this;

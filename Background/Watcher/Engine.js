@@ -367,7 +367,7 @@ Background.Watcher.Engine.prototype._updateMainParameters = function() {
             this.bSendNotifications = false;
             break
     }
-}
+};
 
 /**
  * @return Background.Configuration.Main
@@ -377,4 +377,4 @@ Background.Watcher.Engine.prototype._getMainParametersEngine = function() {
         this.oMainParametersEngine = new Background.Configuration.Main();
     }
     return this.oMainParametersEngine;
-}
+};

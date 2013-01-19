@@ -121,13 +121,12 @@ Storage.WatchList.prototype.open = function(fCallback) {
 
 };
 
-Storage.WatchList.prototype._getStorageEngine = function()
-{
+Storage.WatchList.prototype._getStorageEngine = function () {
     if (null === this.oStorageEngine) {
         this.oStorageEngine = new Storage.Engine();
     }
     return this.oStorageEngine;
-}
+};
 
 /***
  * Singleton
@@ -138,4 +137,4 @@ Storage.WatchList.getInstance = function() {
         this.instance = new Storage.WatchList();
     }
     return this.instance;
-}
+};

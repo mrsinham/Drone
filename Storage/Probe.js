@@ -91,13 +91,12 @@ Storage.Probes.prototype.open = function(fCallback) {
 
 };
 
-Storage.Probes.prototype._getStorageEngine = function()
-{
+Storage.Probes.prototype._getStorageEngine = function () {
     if (null === this.oStorageEngine) {
         this.oStorageEngine = new Storage.Engine();
     }
     return this.oStorageEngine;
-}
+};
 
 /***
  * Singleton
@@ -108,4 +107,4 @@ Storage.Probes.getInstance = function() {
         this.instance = new Storage.Probes();
     }
     return this.instance;
-}
+};

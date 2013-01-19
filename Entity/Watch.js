@@ -37,12 +37,12 @@ Entity.Watch.prototype.getHostname = function() {
 Entity.Watch.prototype.setHostname = function(sHostname)
 {
     this.hostname = sHostname;
-}
+};
 
 Entity.Watch.prototype.setHttpCode = function(iCode)
 {
     this.httpCode = iCode;
-}
+};
 
 
 Entity.Watch.prototype.getHttpCode = function() {
@@ -120,4 +120,4 @@ Entity.Watch.prototype.setName = function(sName) {
 
 Entity.Watch.prototype.isOk = function() {
     return (this.sNormalCode === this.httpCode);
-}
+};

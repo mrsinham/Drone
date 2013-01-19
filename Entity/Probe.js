@@ -28,7 +28,7 @@ Entity.Probe.prototype.getHostname = function() {
 Entity.Probe.prototype.setHostname = function(sHostname)
 {
     this.hostname = sHostname;
-}
+};
 
 
 Entity.Probe.prototype.getName = function() {
@@ -42,9 +42,9 @@ Entity.Probe.prototype.setName = function(sName) {
 
 Entity.Probe.prototype.setCookies = function(oCookies) {
     this.cookies = oCookies;
-}
+};
 
 
 Entity.Probe.prototype.getCookies = function() {
     return this.cookies;
-}
+};

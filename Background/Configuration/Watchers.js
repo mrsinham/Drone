@@ -27,7 +27,7 @@ Background.Configuration.Watchers.prototype.loadConfigurationFromArray = functio
 Background.Configuration.Watchers.prototype.getConfiguration = function()
 {
     return this.aLoadedConfiguration;
-}
+};
 
 /***
  * Check the validity of each Configuration
